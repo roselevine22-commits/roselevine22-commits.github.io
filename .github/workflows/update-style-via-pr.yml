@@ -1,0 +1,66 @@
+name: Update Style via PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      style_changes:
+        description: 'CSS changes to apply to style.css'
+        required: true
+        type: string
+      branch_name:
+        description: 'Name for the feature branch'
+        required: false
+        default: 'update-style'
+        type: string
+
+jobs:
+  update-style:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create feature branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b ${{ inputs.branch_name }}-${{ github.run_id }}
+
+      - name: Update style.css
+        env:
+          STYLE_CHANGES: ${{ inputs.style_changes }}
+        run: |
+          printf '%s\n' "$STYLE_CHANGES" >> style.css
+
+      - name: Commit changes
+        run: |
+          git add style.css
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 1
+          fi
+          git commit -m "Update style.css with new changes"
+
+      - name: Push branch
+        run: |
+          git push origin ${{ inputs.branch_name }}-${{ github.run_id }}
+
+      - name: Create Pull Request
+        env:
+          STYLE_CHANGES: ${{ inputs.style_changes }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const styleChanges = process.env.STYLE_CHANGES;
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Update style.css',
+              head: '${{ inputs.branch_name }}-${{ github.run_id }}',
+              base: 'main',
+              body: `This PR updates style.css with the following changes:\n\n\`\`\`css\n${styleChanges}\n\`\`\``
+            });
+            console.log(`Created PR #${pr.number}`);
