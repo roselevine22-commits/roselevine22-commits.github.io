@@ -104,7 +104,7 @@
           <p>For collaborations, screenings, or archive access, reach out.</p>
           <p class="muted">hello@fxstudios.example — @fxstudios</p>
         </div>
-        <form class="contact-form" action="#" onsubmit="event.preventDefault(); alert('Thanks — message simulated.');">
+        <form class="contact-form" action="https://formspree.io/f/mldqnlwl" method="POST">
           <label>
             <span class="sr-only">Name</span>
             <input type="text" name="name" placeholder="Your name" required />
@@ -117,6 +117,7 @@
             <span class="sr-only">Message</span>
             <textarea name="message" placeholder="Tell us about your project" rows="4" required></textarea>
           </label>
+          <div class="form-msg" aria-live="polite"></div>
           <div class="form-actions">
             <button class="btn" type="submit">Send</button>
             <button class="btn ghost" type="reset">Reset</button>
@@ -133,5 +134,70 @@
   </footer>
 
   <script src="script.js" defer></script>
+  <script>
+  (function(){
+    var form = document.querySelector('.contact-form');
+    if (!form) return;
+    var msgBox = form.querySelector('.form-msg');
+
+    function showMsg(text, isError) {
+      if (!msgBox) return;
+      msgBox.textContent = text;
+      msgBox.style.color = isError ? '#ff6b6b' : '#6ef6ff';
+      msgBox.style.marginBottom = '0.7rem';
+    }
+
+    function clearMsg() {
+      if (!msgBox) return;
+      msgBox.textContent = '';
+      msgBox.style.marginBottom = '0';
+    }
+
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    form.addEventListener('submit', function(e) {
+      clearMsg();
+      var name = form.elements['name'].value.trim();
+      var email = form.elements['email'].value.trim();
+      var message = form.elements['message'].value.trim();
+
+      if (!name || !email || !message) {
+        e.preventDefault();
+        showMsg('Please fill in all fields.', true);
+        return;
+      }
+      if (!validateEmail(email)) {
+        e.preventDefault();
+        showMsg('Please enter a valid email address.', true);
+        return;
+      }
+
+      // Intercept for async handling if fetch is available
+      if (typeof fetch !== 'undefined') {
+        e.preventDefault();
+        var data = new FormData(form);
+        fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        }).then(function(resp) {
+          if (resp.ok) {
+            showMsg('Thanks! Your message has been sent.', false);
+            form.reset();
+          } else {
+            showMsg('Oops! There was a problem. Please try again.', true);
+          }
+        }).catch(function() {
+          showMsg('Oops! There was a problem. Please try again.', true);
+        });
+      }
+      // If no fetch, allow normal POST (progressive enhancement)
+    });
+
+    form.addEventListener('reset', clearMsg);
+  })();
+  </script>
 </body>
 </html>
