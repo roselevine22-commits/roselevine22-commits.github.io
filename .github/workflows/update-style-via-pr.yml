@@ -30,12 +30,18 @@ jobs:
           git checkout -b ${{ inputs.branch_name }}-${{ github.run_id }}
 
       - name: Update style.css
+        env:
+          STYLE_CHANGES: ${{ inputs.style_changes }}
         run: |
-          echo "${{ inputs.style_changes }}" >> style.css
+          printf '%s\n' "$STYLE_CHANGES" >> style.css
 
       - name: Commit changes
         run: |
           git add style.css
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 1
+          fi
           git commit -m "Update style.css with new changes"
 
       - name: Push branch
@@ -43,15 +49,18 @@ jobs:
           git push origin ${{ inputs.branch_name }}-${{ github.run_id }}
 
       - name: Create Pull Request
+        env:
+          STYLE_CHANGES: ${{ inputs.style_changes }}
         uses: actions/github-script@v7
         with:
           script: |
+            const styleChanges = process.env.STYLE_CHANGES;
             const { data: pr } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: 'Update style.css',
               head: '${{ inputs.branch_name }}-${{ github.run_id }}',
               base: 'main',
-              body: 'This PR updates style.css with the following changes:\n\n```css\n${{ inputs.style_changes }}\n```'
+              body: `This PR updates style.css with the following changes:\n\n\`\`\`css\n${styleChanges}\n\`\`\``
             });
             console.log(`Created PR #${pr.number}`);
