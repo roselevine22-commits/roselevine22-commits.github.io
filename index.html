@@ -1,63 +1,137 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FX Studios</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FX Studios — Cinematic Media</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="theme-color" content="#0b0b0f" />
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">FX Studios</div>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header class="site-header">
+    <div class="container header-inner">
+      <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="hamburger"></span>
+      </button>
 
-    <main>
-        <section class="hero">
-            <h1>Welcome to FX Studios</h1>
-            <p>Creating innovative digital experiences</p>
-        </section>
+      <div class="brand">
+        <a href="#hero" class="logo" aria-label="FX Studios home">
+          <span class="logo-glow">FX<span class="studio">Studios</span></span>
+        </a>
+      </div>
 
-        <section id="about" class="about">
-            <h2>About Us</h2>
-            <p>FX Studios is dedicated to delivering high-quality creative solutions. We specialize in bringing your ideas to life through innovative design and technology.</p>
-        </section>
+      <nav class="site-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#vault">Vault</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-        <section id="services" class="services">
-            <h2>Our Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Web Development</h3>
-                    <p>Modern, responsive websites built with the latest technologies.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Design</h3>
-                    <p>Creative visual solutions that make your brand stand out.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Consulting</h3>
-                    <p>Expert guidance to help you achieve your digital goals.</p>
-                </div>
-            </div>
-        </section>
+  <main>
+    <section id="hero" class="hero">
+      <div class="container hero-inner">
+        <h1 class="title reveal">
+          <span class="logo-glow large">FX<span class="studio">Studios</span></span>
+        </h1>
+        <p class="lead reveal">Cinematic visuals • Experimental sound • Vault of ideas</p>
+        <div class="hero-cta reveal">
+          <a class="btn" href="#projects">See Projects</a>
+          <a class="btn ghost" href="#vault">Open Vault</a>
+        </div>
+      </div>
+    </section>
 
-        <section id="contact" class="contact">
-            <h2>Contact Us</h2>
-            <p>Get in touch to discuss your next project.</p>
-        </section>
-    </main>
+    <section id="about" class="panel-section">
+      <div class="container reveal glass">
+        <h2>About</h2>
+        <p>FX Studios crafts cinematic experiences that blend practical craft with experimental media. We build worlds, score moods, and archive ideas that push visual storytelling.</p>
+      </div>
+    </section>
 
-    <footer>
-        <p>&copy; <span id="year"></span> FX Studios. All rights reserved.</p>
-    </footer>
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
+    <section id="projects" class="panel-section">
+      <div class="container reveal grid">
+        <article class="glass">
+          <img src="https://picsum.photos/800/600?random=1" alt="Project Aurora - Short film exploring memory and light with practical effects" class="project-image" />
+          <h3>Project Aurora</h3>
+          <p>Short film exploring memory and light. Shot on practical effects and layered color grades.</p>
+        </article>
+        <article class="glass">
+          <img src="https://picsum.photos/800/600?random=2" alt="Pulse Sound - Audio-visual installation with granular synthesis and projection mapping" class="project-image" />
+          <h3>Pulse Sound</h3>
+          <p>Audio-visual installation merging granular synthesis with immersive projection mapping.</p>
+        </article>
+        <article class="glass">
+          <img src="https://picsum.photos/800/600?random=3" alt="Sequence X - Experimental vignette series featuring movement and fractal cinematography" class="project-image" />
+          <h3>Sequence X</h3>
+          <p>Experimental vignette series focusing on movement and fractal cinematography.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="audio-section">
+      <div class="container reveal glass">
+        <h3>Featured Audio</h3>
+        <p>Listen to our latest experimental soundscape from the Pulse Sound project.</p>
+        <audio controls class="audio-player">
+          <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </section>
+
+    <section id="vault" class="panel-section">
+      <div class="container reveal glass">
+        <h2>Vault</h2>
+        <p>Curated assets, references, and behind-the-scenes experiments. A private archive for collaborators and future retrospectives.</p>
+        <div class="vault-list">
+          <span class="chip">Concepts</span>
+          <span class="chip">Raw Footage</span>
+          <span class="chip">Color LUTs</span>
+          <span class="chip">Audio Banks</span>
+        </div>
+        <img src="https://picsum.photos/600/600?random=4" alt="FX Studios Vault - Archive preview showcasing behind-the-scenes experiments" class="vault-image" />
+      </div>
+    </section>
+
+    <section id="contact" class="panel-section">
+      <div class="container reveal glass contact-grid">
+        <div>
+          <h2>Contact</h2>
+          <p>For collaborations, screenings, or archive access, reach out.</p>
+          <p class="muted">hello@fxstudios.example — @fxstudios</p>
+        </div>
+        <form class="contact-form" action="#" onsubmit="event.preventDefault(); alert('Thanks — message simulated.');">
+          <label>
+            <span class="sr-only">Name</span>
+            <input type="text" name="name" placeholder="Your name" required />
+          </label>
+          <label>
+            <span class="sr-only">Email</span>
+            <input type="email" name="email" placeholder="Email" required />
+          </label>
+          <label>
+            <span class="sr-only">Message</span>
+            <textarea name="message" placeholder="Tell us about your project" rows="4" required></textarea>
+          </label>
+          <div class="form-actions">
+            <button class="btn" type="submit">Send</button>
+            <button class="btn ghost" type="reset">Reset</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>&copy; <span id="year"></span> FX Studios — Made with cinematic care.</small>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
