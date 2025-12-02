@@ -6,6 +6,11 @@
   <title>FX Studios — Cinematic Media</title>
   <link rel="stylesheet" href="style.css" />
   <meta name="theme-color" content="#0b0b0f" />
+  <style>
+    .form-msg { font-size: 0.95rem; }
+    .form-msg--success { color: #6ef6ff; margin-bottom: 0.7rem; }
+    .form-msg--error { color: #ff6b6b; margin-bottom: 0.7rem; }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -143,14 +148,13 @@
     function showMsg(text, isError) {
       if (!msgBox) return;
       msgBox.textContent = text;
-      msgBox.style.color = isError ? '#ff6b6b' : '#6ef6ff';
-      msgBox.style.marginBottom = '0.7rem';
+      msgBox.className = 'form-msg ' + (isError ? 'form-msg--error' : 'form-msg--success');
     }
 
     function clearMsg() {
       if (!msgBox) return;
       msgBox.textContent = '';
-      msgBox.style.marginBottom = '0';
+      msgBox.className = 'form-msg';
     }
 
     function validateEmail(email) {
